@@ -28,7 +28,7 @@ public class OraculoController extends HttpServlet{
 		List<String> produtos = oraculo.melhoresProdutos(produto);
 		req.setAttribute("produtos", produtos);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("resposta.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("oraculo-resposta.jsp");
 		dispatcher.forward(req, resp);
 	}
 }
