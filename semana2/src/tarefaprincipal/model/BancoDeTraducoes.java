@@ -9,7 +9,9 @@ import java.util.Scanner;
 public class BancoDeTraducoes {
 
 	public List<String> buscandoPalavrasTraducoes() throws FileNotFoundException {
-		Scanner sc = new Scanner(new FileInputStream("traducoes.txt"));
+		String caminho = "C:/projetos/Coursera-Javaweb-Avancado-ITA/semana2/";
+
+		Scanner sc = new Scanner(new FileInputStream(caminho + "/traducoes.txt"));
 		List<String> palavrasTraducoes = new ArrayList<String>();
 
 		while (sc.hasNextLine()) {
@@ -18,30 +20,6 @@ public class BancoDeTraducoes {
 		}
 		sc.close();
 		return palavrasTraducoes;
-	}
-
-	public List<String> buscandoPalavras() throws FileNotFoundException {
-		List<String> palavrasTraducoes = this.buscandoPalavrasTraducoes();
-		
-		List<String> palavras = new ArrayList<String>();
-		for (String palavraTraducao : palavrasTraducoes) {
-			String[] palavra = palavraTraducao.split(";");
-			palavras.add(palavra[0]);
-		}
-		
-		return palavras;
-	}
-	
-	public List<String> buscandoTraducoes() throws FileNotFoundException {
-		List<String> palavrasTraducoes = this.buscandoPalavrasTraducoes();
-		
-		List<String> traducoes = new ArrayList<String>();
-		for (String palavraTraducao : palavrasTraducoes) {
-			String[] traducao = palavraTraducao.split(";");
-			traducoes.add(traducao[1]);
-		}
-		
-		return traducoes;
 	}
 
 }
