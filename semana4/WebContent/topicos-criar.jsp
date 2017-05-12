@@ -11,7 +11,11 @@
 <body>
 	<div class="container">
 
-		<h2>Tela de Cadastro</h2>
+		<h2>Cadastrar Tópico</h2>
+		
+		<c:if test="${not empty info}">
+			<p class="alert alert-warning">${info}</p>
+		</c:if>
 	
 		<form method="POST" action="criarTopico">
 			<div class="form-group">

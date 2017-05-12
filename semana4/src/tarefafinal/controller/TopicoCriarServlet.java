@@ -33,22 +33,27 @@ public class TopicoCriarServlet extends HttpServlet {
 		String titulo = req.getParameter("titulo");
 		String conteudo = req.getParameter("conteudo");
 
-		Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
+		if (titulo.isEmpty() || conteudo.isEmpty()) {
+			req.setAttribute("info", "Todos os campos são obrigatórios");
+			req.getRequestDispatcher("topicos-criar.jsp").forward(req, resp);
+		} else {
+			Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
 
-		Topico t = new Topico();
-		t.setTitulo(titulo);
-		t.setConteudo(conteudo);
-		t.setUsuario(usuario);
+			Topico t = new Topico();
+			t.setTitulo(titulo);
+			t.setConteudo(conteudo);
+			t.setUsuario(usuario);
 
-		TopicoDAO topicoDAO = new TopicoDAO();
-		topicoDAO.inserirTopico(t);
+			TopicoDAO topicoDAO = new TopicoDAO();
+			topicoDAO.inserirTopico(t);
 
-		UsuarioDAO usuDAO = new UsuarioDAO();
-		usuDAO.adicionarPontos(usuario.getLogin(), 10);
-		
-		// atualizando o usuario settado na session
-		req.getSession().setAttribute("usuarioLogado", usuDAO.recuperarUsuarioPeloLogin(usuario.getLogin()));
+			UsuarioDAO usuDAO = new UsuarioDAO();
+			usuDAO.adicionarPontos(usuario.getLogin(), 10);
 
-		resp.sendRedirect("topicos");
+			// atualizando o usuario settado na session
+			req.getSession().setAttribute("usuarioLogado", usuDAO.recuperarUsuarioPeloLogin(usuario.getLogin()));
+
+			resp.sendRedirect("topicos");
+		}
 	}
 }

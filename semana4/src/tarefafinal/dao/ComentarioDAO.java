@@ -45,13 +45,24 @@ public class ComentarioDAO {
 	public void inserir(Comentario comentario) {
 		try (Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/coursera_usuarios", "root", "")) {
 
-			String sql = "INSERT INTO comentario (comentario, login, id_topico) VALUES (?,?,?)";
-			PreparedStatement stmt = c.prepareStatement(sql);
-			stmt.setString(1, comentario.getComentario());
-			stmt.setString(2, comentario.getUsuario().getLogin());
-			stmt.setInt(3, comentario.getTopico().getIdTopico());
+			if (comentario.getIdComentario() == null) {
+				String sql = "INSERT INTO comentario (comentario, login, id_topico) VALUES (?,?,?)";
+				PreparedStatement stmt = c.prepareStatement(sql);
+				stmt.setString(1, comentario.getComentario());
+				stmt.setString(2, comentario.getUsuario().getLogin());
+				stmt.setInt(3, comentario.getTopico().getIdTopico());
 
-			stmt.executeUpdate();
+				stmt.executeUpdate();
+			} else {
+				String sql = "INSERT INTO comentario (id_comentario, comentario, login, id_topico) VALUES (?,?,?,?)";
+				PreparedStatement stmt = c.prepareStatement(sql);
+				stmt.setInt(1, comentario.getIdComentario());
+				stmt.setString(2, comentario.getComentario());
+				stmt.setString(3, comentario.getUsuario().getLogin());
+				stmt.setInt(4, comentario.getTopico().getIdTopico());
+				
+				stmt.executeUpdate();
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
