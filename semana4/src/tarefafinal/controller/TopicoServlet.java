@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tarefafinal.dao.TopicoDAO;
+import tarefafinal.dao.UsuarioDAO;
 import tarefafinal.model.Topico;
 import tarefafinal.model.Usuario;
 

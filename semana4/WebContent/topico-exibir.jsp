@@ -5,74 +5,58 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<style>
-body {
-	font-family: arial, sans-serif;
-}
-
-.conteudo {
-	max-width: 1024px;
-	margin: 0 auto;
-}
-
-form textarea {
-	width: 100%;
-}
-
-table {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-td, th {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
-}
-
-tr:nth-child(even) {
-	background-color: #dddddd;
-}
-</style>
+<title>Detalhe do Tópico</title>
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+	type="text/css" />
 </head>
 <body>
-	<div class="conteudo">
+	<div class="container">
+		<div class="row">
 
-		<h2>Exibindo o tópico por completo</h2>
+			<div class="jumbotron">
+				<h2>Titulo: ${topico.getTitulo()}</h2>
+				<h6>Autor: ${topico.getUsuario().getNome()}</h6>
+				<p>${topico.getConteudo()}</p>
 
-		<h3>Titulo: ${topico.getTitulo()}</h3>
-		<h4>Autor: ${topico.getUsuario().getNome()}</h4>
-		<p>${topico.getConteudo()}</p>
+				<a href="topicos" class="btn btn-default">Voltar</a>
+			</div>
 
-		<br> <a href="topicos">Voltar</a>
+			<c:choose>
+				<c:when test="${not empty comentariosDoTopico}">
+					<div class="page-header">
+						<h2>
+							<small class="pull-right">${qtdComentarios} Comentário(s)</small> Comentários
+						</h2>
+					</div>
+					<c:forEach var="comentario" items="${comentariosDoTopico}">
+						<div class="comments-list">
+							<div class="media">
+								<div class="media-body">
+									<h4 class="media-heading user_name">${comentario.getUsuario().getNome()}</h4>
+									<p>${comentario.getComentario()}</p>
+								</div>
+							</div>
+						</div>
+						<hr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p class="alert alert-info">Ainda não exitem comentários para esse tópico!</p>
+				</c:otherwise>
+			</c:choose>
+			<br>
 
-		<hr>
+			<form method="POST" action="exibirTopico">
+				<div class="form-group">
+					<label>Escreva um novo comentário:</label> 
+					<input type="hidden" value="${topico.getIdTopico()}" name="idTopico">
+					<textarea rows="6" name="comentario" class="form-control"></textarea>
+				</div>
+				<input type="submit" value="Adicionar Comentário" class="btn btn-primary">
+			</form>
+			<br>
 
-		<h2>Comentários</h2>
-		<table>
-			<tr>
-				<th>Autor</th>
-				<th>Comentário</th>
-			</tr>
-			<c:forEach var="comentario" items="#{comentariosDoTopico}">
-				<tr>
-					<td>${comentario.getUsuario().getNome()}</td>
-					<td>${comentario.getComentario()}</td>
-				</tr>
-			</c:forEach>
-		</table>
-		<br>
-
-		<form method="POST" action="exibirTopico">
-			<fieldset>
-				<legend>Escreva um novo comentário:</legend>
-				<input type="hidden" value="${topico.getIdTopico()}" name="idTopico">
-				<textarea rows="6" name="comentario"></textarea>
-				<input type="submit" value="Adicionar Comentário">
-			</fieldset>
-		</form>
-
+		</div>
 	</div>
 </body>
 </html>

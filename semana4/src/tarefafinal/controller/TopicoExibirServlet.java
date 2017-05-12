@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import tarefafinal.dao.ComentarioDAO;
 import tarefafinal.dao.TopicoDAO;
+import tarefafinal.dao.UsuarioDAO;
 import tarefafinal.model.Comentario;
 import tarefafinal.model.Topico;
 import tarefafinal.model.Usuario;
@@ -33,6 +34,7 @@ public class TopicoExibirServlet extends HttpServlet {
 			List<Comentario> comentarios = comentarioDAO.recuperaComentariosDoTopico(id);
 
 			req.setAttribute("topico", topico);
+			req.setAttribute("qtdComentarios", comentarios.size());
 			req.setAttribute("comentariosDoTopico", comentarios);
 			req.getRequestDispatcher("topico-exibir.jsp").forward(req, resp);
 		}
@@ -43,13 +45,21 @@ public class TopicoExibirServlet extends HttpServlet {
 		String comentario = req.getParameter("comentario");
 		Integer idTopico = Integer.parseInt(req.getParameter("idTopico"));
 
+		Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
+
 		Comentario c = new Comentario();
 		c.setComentario(comentario);
-		c.setUsuario((Usuario) req.getSession().getAttribute("usuarioLogado"));
+		c.setUsuario(usuario);
 		c.setTopico(new TopicoDAO().recuperarTopicoPorId(idTopico));
 
 		ComentarioDAO comentarioDAO = new ComentarioDAO();
 		comentarioDAO.inserir(c);
+
+		UsuarioDAO usuDAO = new UsuarioDAO();
+		usuDAO.adicionarPontos(usuario.getLogin(), 3);
+
+		// atualizando o usuario settado na session
+		req.getSession().setAttribute("usuarioLogado", usuDAO.recuperarUsuarioPeloLogin(usuario.getLogin()));
 
 		resp.sendRedirect("exibirTopico?id_topico=" + idTopico);
 	}

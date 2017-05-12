@@ -5,39 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<style>
-body {
-	font-family: arial, sans-serif;
-}
-
-.conteudo {
-	max-width: 1024px;
-	margin: 0 auto;
-}
-
-table {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-td, th {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
-}
-
-tr:nth-child(even) {
-	background-color: #dddddd;
-}
-</style>
+<title>Ranking</title>
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<div class="conteudo">
+	<div class="container">
 
 		<h2>Ranking de pontução dos usuários</h2>
 
-		<table>
+		<table class="table table-bordered table-hover">
 			<tr>
 				<th>Nome</th>
 				<th>Login</th>
@@ -51,9 +27,8 @@ tr:nth-child(even) {
 				</tr>
 			</c:forEach>
 		</table>
-		<br> 
 		
-		<a href="topicos">Voltar</a>
+		<a href="topicos" class="btn btn-default">Voltar</a>
 	</div>
 </body>
 </html>

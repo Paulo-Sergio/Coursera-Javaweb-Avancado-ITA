@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import tarefafinal.exception.AutenticadorException;
 import tarefafinal.model.Usuario;
 
 public class UsuarioDAO implements IUsuarioDAO {
@@ -108,7 +109,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 		}
 	}
 
-	public String autenticar(String login, String senha) throws Exception {
+	public String autenticar(String login, String senha) throws AutenticadorException {
 		try (Connection c = DriverManager.getConnection("jdbc:mysql://localhost:3306/coursera_usuarios", "root", "")) {
 
 			PreparedStatement ps = c.prepareStatement("SELECT nome FROM usuario WHERE login = ? AND senha = ?");
@@ -119,9 +120,11 @@ public class UsuarioDAO implements IUsuarioDAO {
 			if (rs.next()) {
 				return rs.getString("nome");
 			} else {
-				throw new Exception("Não foi possivel autenticar o usuário!");
+				throw new AutenticadorException("Login e/ou senha incorretos");
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
-
 }

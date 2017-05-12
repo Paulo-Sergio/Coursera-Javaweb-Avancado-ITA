@@ -5,40 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<style>
-body {
-	font-family: arial, sans-serif;
-}
-
-.conteudo {
-	max-width: 1024px;
-	margin: 0 auto;
-}
-
-table {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-td, th {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
-}
-
-tr:nth-child(even) {
-	background-color: #dddddd;
-}
-</style>
+<title>Todos os Tópicos</title>
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-	<div class="conteudo">
+	<div class="container">
 
 		<h1>Bem vindo: ${usuarioLogado.getNome()}</h1>
-		<h3>Seus Topicos</h3>
+		<h3>Tópicos do Fórum</h3>
 
-		<table>
+		<table class="table table-bordered table-hover">
 			<tr>
 				<th>Titulo</th>
 				<th>Nome do Usuário</th>
@@ -52,9 +28,13 @@ tr:nth-child(even) {
 				</tr>
 			</c:forEach>
 		</table>
-		<br> 
-		<a href="criarTopico">Criar Tópico</a> | 
-		<a href="ranking">Ver Raking</a>
+		
+		<div class="alert alert-info">
+			<p>Sua pontuação atual é de: ${usuarioLogado.getPontos()} pontos</p>
+		</div>
+		
+		<a href="criarTopico" class="btn btn-primary">Criar Tópico</a>
+		<a href="ranking" class="btn btn-primary">Ver Raking</a>
 
 	</div>
 </body>

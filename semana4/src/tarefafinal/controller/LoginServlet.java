@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import tarefafinal.dao.UsuarioDAO;
+import tarefafinal.exception.AutenticadorException;
 import tarefafinal.model.Usuario;
 
 @WebServlet("/login")
@@ -42,8 +43,8 @@ public class LoginServlet extends HttpServlet {
 				resp.sendRedirect("topicos");
 			}
 
-		} catch (Exception e) {
-			req.setAttribute("erro", e.getMessage());
+		} catch (AutenticadorException e) {
+			req.setAttribute("info", e.getMessage());
 			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}
 

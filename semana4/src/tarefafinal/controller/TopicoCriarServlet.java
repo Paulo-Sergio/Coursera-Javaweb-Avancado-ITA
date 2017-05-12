@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import tarefafinal.dao.TopicoDAO;
+import tarefafinal.dao.UsuarioDAO;
 import tarefafinal.model.Topico;
 import tarefafinal.model.Usuario;
 
@@ -31,14 +32,22 @@ public class TopicoCriarServlet extends HttpServlet {
 		String titulo = req.getParameter("titulo");
 		String conteudo = req.getParameter("conteudo");
 
+		Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
+
 		Topico t = new Topico();
 		t.setTitulo(titulo);
 		t.setConteudo(conteudo);
-		t.setUsuario((Usuario) req.getSession().getAttribute("usuarioLogado"));
+		t.setUsuario(usuario);
 
 		TopicoDAO topicoDAO = new TopicoDAO();
 		topicoDAO.inserirTopico(t);
+
+		UsuarioDAO usuDAO = new UsuarioDAO();
+		usuDAO.adicionarPontos(usuario.getLogin(), 10);
 		
+		// atualizando o usuario settado na session
+		req.getSession().setAttribute("usuarioLogado", usuDAO.recuperarUsuarioPeloLogin(usuario.getLogin()));
+
 		resp.sendRedirect("topicos");
 	}
 }

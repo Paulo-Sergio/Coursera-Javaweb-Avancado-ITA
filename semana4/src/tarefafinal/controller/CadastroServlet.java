@@ -29,8 +29,8 @@ public class CadastroServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		String senha = req.getParameter("senha");
 
-		if (login.isEmpty()) {
-			req.setAttribute("info", "O login é campo obrigatorio");
+		if (login.isEmpty() || nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+			req.setAttribute("info", "Todos os campos são obrigatórios");
 			req.getRequestDispatcher("cadastro.jsp").forward(req, resp);
 		} else {
 			Usuario u = new Usuario();
@@ -42,7 +42,6 @@ public class CadastroServlet extends HttpServlet {
 
 			new UsuarioDAO().inserirUsuario(u);
 
-			req.setAttribute("info", "Cadastro realizado com sucesso!");
 			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}
 	}
