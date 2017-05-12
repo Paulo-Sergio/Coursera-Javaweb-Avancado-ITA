@@ -21,15 +21,15 @@ public class TopicoExibirServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Integer id = Integer.parseInt(req.getParameter("id_topico"));
-
-		TopicoDAO topicoDAO = new TopicoDAO();
-		ComentarioDAO comentarioDAO = new ComentarioDAO();
-
 		Usuario usuario = (Usuario) req.getSession().getAttribute("usuarioLogado");
 		if (usuario == null) {
 			resp.sendRedirect("login");
 		} else {
+			Integer id = Integer.parseInt(req.getParameter("id_topico"));
+
+			TopicoDAO topicoDAO = new TopicoDAO();
+			ComentarioDAO comentarioDAO = new ComentarioDAO();
+			
 			Topico topico = topicoDAO.recuperarTopicoPorId(id);
 			List<Comentario> comentarios = comentarioDAO.recuperaComentariosDoTopico(id);
 
@@ -42,6 +42,7 @@ public class TopicoExibirServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String comentario = req.getParameter("comentario");
 		Integer idTopico = Integer.parseInt(req.getParameter("idTopico"));
 

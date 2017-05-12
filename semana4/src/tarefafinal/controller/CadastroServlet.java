@@ -24,6 +24,7 @@ public class CadastroServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String nome = req.getParameter("nome");
 		String login = req.getParameter("login");
 		String email = req.getParameter("email");

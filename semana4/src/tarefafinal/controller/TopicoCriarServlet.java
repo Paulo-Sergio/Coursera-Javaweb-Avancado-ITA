@@ -29,6 +29,7 @@ public class TopicoCriarServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String titulo = req.getParameter("titulo");
 		String conteudo = req.getParameter("conteudo");
 
